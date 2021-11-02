@@ -1,16 +1,11 @@
-const mysql = require('mysql');
+const express = require('express');
+const app = express();
+const dbc = require('./config');
 
-const dbc = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '123',
-    database: 'node_mysql'
+app.get('/', (req, res) => {
+    dbc.query('SELECT * FROM users', (err, results)=>{
+        err ? res.send("Error") : res.send(results);
+    });
 });
 
-dbc.connect((err)=>{
-    err ? console.log("Connection Failed") : console.log('Connection Successful');
-});
-
-dbc.query('SELECT * FROM users', (err, results)=>{
-    console.log("Result: ", results);
-})
+app.listen(4545);
