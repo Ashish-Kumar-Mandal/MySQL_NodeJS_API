@@ -20,4 +20,15 @@ app.post('/', (req, res)=>{
     });
 });
 
+app.put('/:_id', (req, res)=>{
+    const body = req.body;
+    const data = [body.name, body.mobile, body.email, body.password, req.params._id];
+    dbc.query('UPDATE users SET name=?, mobile=?, email=?, password=? WHERE usr_id=? ', data, (error, results, fields) => {
+        error ? error : '';
+        msg = '';
+        results.affectedRows > 0 ? msg = results.affectedRows+' Records Updated Successfully' : msg = 'Something Wrong';
+        res.send(msg);
+    });
+});
+
 app.listen(4545);
