@@ -31,4 +31,12 @@ app.put('/:_id', (req, res)=>{
     });
 });
 
+app.delete('/:_id', (req, res) => {
+    dbc.query("DELETE FROM users WHERE usr_id = "+req.params._id, (error, results) => {
+        error ? error : '';
+        msg = '';
+        results.affectedRows > 0 ? msg = results.affectedRows+' Records Deleted Successfully' : msg = 'Something Wrong';
+        res.send(msg);
+    });
+});
 app.listen(4545);
